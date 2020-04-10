@@ -8,6 +8,8 @@ import {tap} from 'rxjs/operators';
 import {noop} from 'rxjs';
 import {Router} from '@angular/router';
 import {AppState} from '../../reducers';
+import {loginAction} from '../auth.actions';
+import {AuthActions} from '../action-types';
 
 @Component({
   selector: 'login',
@@ -45,9 +47,9 @@ export class LoginComponent implements OnInit {
           console.log(user);
 
           // dispatching an action to the store is a side-effect;
-          // this.store.dispatch
+          this.store.dispatch(AuthActions.loginAction({user}));
 
-          this.router.navigate(['/courses']);
+          this.router.navigateByUrl('/courses');
         })
       )
       .subscribe(
