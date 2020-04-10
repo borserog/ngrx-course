@@ -14,7 +14,7 @@ Convention for naming actions:
 
 The dispatch of an `Action` by itself doesn't affect the `Store` state.
 
-> An `Action` just informs the `Store` that an event has occurred or that a command was issued by the component
+> An `Action` just informs the `Store` that an __event__ has occurred or that a __command__ was issued by the component
 
 #### Tasks:
 1. Create `auth.actions.ts`;
@@ -55,17 +55,60 @@ A Reducer function:
 
 # 12
 
-An Action is composed of some data (`payload`) and a `type`.
+An Action is composed of some data (`payload` - optional) and a `type`.
 
 The Reducer does creates a new Store depending on the action type that triggered it.
 
 #### Tasks:
 1. Check for our first store data modification;
 
-## 13 How to read (query) the data from the Store?
+## 13. How to read (query) the data from the Store?
+
+The store is an Observable that emits global application values.
+
+__`store/init` & `store/update-reducers` (Actions)__:
+- (init) NgRx store initial action dispatched when app starts;
+- (update-reducers) Action dispatched when we add feature reducers to our application;
+- Used if we want to do something in response to those initialization events;
+
+#### Task:
+Display information according to what is queried from the store:
+
+1. Inject the store service in the component;
+2. Log the store state to check what is emitted;
+3. Hide/Display login and logout buttons (reactive-style);
+4. Assign state variables according to the store state;
+
+## 14. NgRx Selectors
+
+Makes the query of the data more efficient.
+
+`distinctUntilChange` RxJs operator keeps the store from emit the same values.
+
+`select()` is an NgRx operator that both __maps__ and __remove duplicates__ (it's basically a combination `map()` and a `distinctUntilChanged()`)
+
+The notion of a mapping function with memory that keeps a previously calculated value cached is what makes a Selector.
+
+> In a pure mapping functions, output does not changes until its input changes.
+
+If the input does not change, why should we run a pure function again?
+
+__`createSelector()`__ arguments:
+- __Multiple mapping functions__: for selecting state fragments, for example;
+- Projector function;
+
+Functions like `createSelector()` are known in __functional programming__ as memoized functions. Keeps in memory the results of a calculation.
+
+> Selector: It's a mapping function with memory
+
+Combination of selectors.
 
 
+#### Task:
 
+1. Replace `map()` for `select()`;
+2. Create selector functions;
+3. The second selector functions should nest the first function;
 
 
 
