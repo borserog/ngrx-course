@@ -1,76 +1,77 @@
-### s1
+# Section 1
 
-ngrx => angular reactive extensions;
+NgRx => Angular Reactive Extensions.
 
-state management solution 
+It's a __State Management Solution__ 
 
-without state management solution => 
+Without state management solution: 
 
 - all data is fetched each time from the backend;
-- data is attached to the lifecycle of the component;
+- data is attached to the lifecycle of a component;
 
-ngrx improves UX
+NgRx improves UX (removes loading of content) and performance.
 
-in memory database on the client-side
+__In memory database__ on the client-side.
 
-avoid showing excessive loading indicators
+Saving content is done on the background.
 
-saves on the background
+Advantages of State Management Solutions:
+1. Reduce HTTP requests to the backend;
+2. Data is stored in a in memory database that persists despite component transition (client-side database);
+3. Reduces the overall amount of loading indicators in the application; 
+4. Sending (saving) content is done on the background;
 
-1. reduce http requests
-2. in memory database that persists despite component transition (client-side database);
-3. kill loading indicators (minimal loading indicators)
-4. saving data happens on the background
-
-improved UX and performance
-
-**Tasks:**
-
+### Task: _NgRx Setup_
 1. `ng add @ngrx/store`
 2. `ng add @ngrx/store-devtools`
 3. Redux DevTools
 4. `npm start`
+ 
 
-### s2
+# Lesson 7
 
-different modules manage different parts of our store
+Different modules are used to manage different parts of our Store.
 
-auth module. eager loaded. always loads. **eager load x lazy load.**
+Auth module should be __eager loaded__ (always loads). 
 
-lazy load: reduces the amount of js the application has to load once it starts. application bundle size is smaller. 
+>__Eager Loading x Lazy Loading__
+>
+>By default, NgModules are eagerly loaded, which means that as soon as the app loads, so do all the NgModules, whether or not they are immediately necessary. For large apps with lots of routes, consider lazy loading—a design pattern that loads NgModules as needed. Lazy loading helps keep initial bundle sizes smaller, which in turn helps decrease load times.
+__Lazy load:__ reduces the amount of JS the application has to load once it starts. That makes the __application bundle size__ is smaller. 
 
-imports on app-module are eager loaded.
+Imports on app-module are eager loaded (_forRoot()_).
 
-**scaffolding command**
+__Scaffolding Command:__ commands used for generating Angular files.
 
-**feature module X root module**
+>__Feature Module x Root Module__
+>
+>A feature module is an organizational best practice, as opposed to a concept of the core Angular API. A feature module delivers a cohesive set of functionality focused on a specific application need such as a user workflow, routing, or forms. While you can do everything within the root module, feature modules help you partition the app into focused areas. A feature module collaborates with the root module and with other modules through the services it provides and the components, directives, and pipes that it shares.
 
-**#7 Tasks:**
+store service api. manages the client side database.
+
+`*noop*`: no operation. RxJs Operator.
+
+It's a good practice to have an `AppState` interface that represents the global state of the application saved inside the store.
+
+>_The store is an observable we can subscribe to_. The values emitted represent what's inside the global application state. 
+
+`dispatch()`: Method from the NgRx API that informs the Store of an Action;
+
+### Task: Generate Feature Module
 
 1. `ng generate store auth/Auth --module auth.module.ts`
 2. remove meta reducers
 3. Get to the state Auth: {};
 
 
-
-store service api. manages the client side database.
-
-*noop*. no operation.
-
-Type definition of the state inside the store. State interface is the global state saved inside the store.
-
-The store is an observable we can subscribe to. The values emitted are the value of the global application state. 
-
-dispatch() => only way to modify the data inside the store;
-
-
-
- #8 Tasks:
+# Lesson 8
+####Task: Implement the login method:
 
 1. Implement login method;
 2. Rename State do AppState;
 
-# 9
+
+# Lesson 9
 Actions always have a type and usually a payload.
 
 `dispatch()` X **CRUD-like methods**:
@@ -78,37 +79,37 @@ Actions always have a type and usually a payload.
  2. The store decides what to do with the action;
  3. Indirection. The component isn't tightly coupled with the rest of the application;
 
-Convention for naming actions:
+>__Convention for naming actions:__
+>
+>`"[source_of_action] event or command the action corresponds to"`
 
-`"[source_of_action] event or command the action corresponds to"`
-
-`props<T>()`
+`props<T>()`: carries the payload of an Action.
 
 The dispatch of an `Action` by itself doesn't affect the `Store` state.
 
 > An `Action` just informs the `Store` that an __event__ has occurred or that a __command__ was issued by the component
 
-#### Tasks:
+####Task: Create Actions
 1. Create `auth.actions.ts`;
 2. Create login `Action`;
 3. Check results on Redux DevTools;
 
-# 10
+# Lesson 10
 
 Trick for grouping actions together: `action.types.ts`.
 
-#### Tasks:
+#### Task: Grouping Actions
 1. Create `logout` `Action`;
 2. Create `action.types.ts`;
 3. Use alias at import;
 
-# 11
+# Lesson 11
 
 Reducers answer the question:
 
-> What should the store do in response to an action?
+> What should the Store do in response to an Action?
 
-Comes from de __reduce__ functional programming operation.
+The idea of a Reducer function comes from the __reduce functional programming operation__.
 
 >The Reducer receives de State, an Action, and then calculates a new State.
 
@@ -116,25 +117,25 @@ Comes from de __reduce__ functional programming operation.
 
 A Reducer function:
 - Defines the initial state;
-- Tells the Store what to do in response to an Action;
+- Tells the Store what to do in response to an Action (`on()`);
 
-#### Tasks:
+#### Task: Creating a Reducer Function
 1. Change to AuthState;
 2. Create initialAuthState;
 3. Create Reducer;
 4. Change `auth.module.ts`;
 5. Remove metaReducer;
 
-# 12
+# Lesson 12
 
 An Action is composed of some data (`payload` - optional) and a `type`.
 
-The Reducer does creates a new Store depending on the action type that triggered it.
+The Reducer creates a new Store depending on the action type that triggered it.
 
-#### Tasks:
+#### Task:
 1. Check for our first store data modification;
 
-## 13. How to read (query) the data from the Store?
+# 13. How to read (query) the data from the Store?
 
 The store is an Observable that emits global application values.
 
@@ -151,17 +152,17 @@ Display information according to what is queried from the store:
 3. Hide/Display login and logout buttons (reactive-style);
 4. Assign state variables according to the store state;
 
-## 14. NgRx Selectors
+# 14. NgRx Selectors
 
 Makes the query of the data more efficient.
 
-`distinctUntilChange` RxJs operator keeps the store from emit the same values.
+`distinctUntilChange` RxJs operator keeps the store from emitting the same values.
 
-`select()` is an NgRx operator that both __maps__ and __remove duplicates__ (it's basically a combination `map()` and a `distinctUntilChanged()`)
+`select()` is an NgRx operator that both __maps__ and __remove duplicate emissions of the same value__ (it's basically a combination `map()` and a `distinctUntilChanged()`)
 
 The notion of a mapping function with memory that keeps a previously calculated value cached is what makes a Selector.
 
-> In a pure mapping functions, output does not changes until its input changes.
+> In a pure mapping function, output does not changes until its input changes.
 
 If the input does not change, why should we run a pure function again?
 
@@ -173,16 +174,33 @@ Functions like `createSelector()` are known in __functional programming__ as mem
 
 > Selector: It's a mapping function with memory
 
-Combination of selectors.
+Selectors can be combined.
 
 
 #### Task:
 
 1. Replace `map()` for `select()`;
 2. Create selector functions;
-3. The second selector functions should nest the first function;
+3. The second selector functions should nest the first
+ function;
 
+# 15.Feature Selectors
 
+Feature modules are modules that are part of our
+ application and are included in a root module.
+ 
+Feature modules can have Feature states.
+
+Feature Selector allow for writing selection of Feature
+ States in a __typesafe__ way.
+ 
+ __Feature Selectors__: Selects a whole application
+  branch from our State.
+  
+  `createFeatureSelector<[type_of_the_state]> 
+  (['name_of_the_property_from_state'])`
+ 
+#### Task: Create a Feature Selector
 
 
 
