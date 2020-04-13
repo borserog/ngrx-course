@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import {AppState} from './reducers';
 import {AuthActions} from './auth/action-types';
+import * as fromAuth from './auth/auth.selectors';
 
 @Component({
   selector: 'app-root',
@@ -49,18 +50,12 @@ export class AppComponent implements OnInit {
 
       this.isLoggedIn$ = this.store
         .pipe(
-          map((state) => {
-            console.log('logged in triggers');
-            return !!state['auth'].user;
-          })
+          select(fromAuth.selectLoggedIn)
         );
 
       this.isLoggedOut$ = this.store
         .pipe(
-          map((state) => {
-            console.log('logged out triggers');
-            return !state['auth'].user;
-          })
+          select(fromAuth.selectLoggedOut)
         );
     }
 

@@ -202,7 +202,30 @@ Feature Selector allow for writing selection of Feature
  
 #### Task: Create a Feature Selector
 
+# 16. Practice Lesson: `logout()` Method
 
+# 17. Practice Lesson: Implement a Route Guard
+
+`AuthGuard`: Special type of Angular Service that
+ integrates with the Angular Router.
+ 
+ It implements the `CanActivate` interface.
+ 
+ #### Task: Create Route Guard
+ 
+ 1. Create `auth.guard.ts`;
+ 2. Implement `AuthGuard` service;
+ 3. Add service to `auth.module.ts`;
+ 4. Register Guard @app.module.ts;
+ 5. Inject Store at the AuthGuard Service;
+ 6. Redirect not logged in users using `router.navigate
+ ()` on the AuthGuard Service;
+ 
+ # 18. Effects
+ 
+ 
+ 
+ 
 
 
 

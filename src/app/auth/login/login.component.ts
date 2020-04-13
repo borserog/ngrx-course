@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
     this.auth.login(formValue.email, formValue.password)
       .pipe(
         tap((user) => {
-          console.log(user);
 
           // dispatching an action to the store is a side-effect;
           this.store.dispatch(AuthActions.loginAction({user}));

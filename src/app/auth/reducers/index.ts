@@ -7,9 +7,10 @@ import {
 } from '@ngrx/store';
 import {loginAction} from '../auth.actions';
 import {AuthActions} from '../action-types';
+import {User} from '../model/user.model';
 
 export interface AuthState {
-
+  user: User;
 }
 
 export const initialAuthState: AuthState = {
@@ -22,6 +23,11 @@ export const authReducer = createReducer(
     // extracts the payload of the action
     return {
       user: action.user
+    };
+  }),
+  on(AuthActions.logoutAction, (state, action) => {
+    return {
+      user: undefined
     };
   })
 );
